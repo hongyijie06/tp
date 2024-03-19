@@ -24,11 +24,11 @@ public class Parser {
                 ui.isPlaying = false;
             } else if (lowerCaseCommand.startsWith("solution") || lowerCaseCommand.startsWith("explain")) {
                 processSolutionCommand(lowerCaseCommand, ui, questionsList);
+
             }  else if (!lowerCaseCommand.startsWith("topic")) {
                 throw new CustomException("-1 HP coz invalid command");
             }
         }
-
     }
 
     private void processStartCommand (
@@ -39,6 +39,7 @@ public class Parser {
         if (commandParts.length != 2) {
             throw new CustomException("invalid " + lowerCaseCommand + " command");
         }
+
         String commandParameter = commandParts[PARAMETER_INDEX];
         try {
             // if parameter is an Integer
@@ -95,6 +96,21 @@ public class Parser {
 
             String allSolutions = questionsList.getAllSolutions();
             ui.printAllSolutions(allSolutions);
+        }
+    }
+
+    private void processHelpCommand(String lowerCaseCommand, Ui ui, Helper helper) throws CustomException {
+        String[] commandParts = lowerCaseCommand.split(" ");
+        if (commandParts.length != 1 && commandParts.length != 2) {
+            throw new CustomException("invalid help command parameter");
+        }
+
+        if (commandParts.length == 1) {
+            Object[][] printData = helper.listAllCommands();
+            String[] tableHeader = {"command", "function", "usage"};
+            ui.printTable(tableHeader, printData);
+        } else {
+            // TODO: given a command, find and print the detailed usage for that command
         }
     }
 }

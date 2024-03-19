@@ -1,5 +1,6 @@
 package seedu.duke;
 
+import com.jakewharton.fliptables.FlipTableConverters;
 import seedu.duke.exceptions.CustomException;
 
 import java.util.Scanner;
@@ -114,6 +115,10 @@ public class Ui {
     public void sayBye() {
         System.out.println("bye bye, get more sleep zzz");
         printLine();
+    }
+
+    public void printTable(String[] headers, Object[][] data) {
+        System.out.println(FlipTableConverters.fromObjects(headers, data));
     }
 
 }

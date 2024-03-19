@@ -6,6 +6,7 @@ public class Player2113 {
     private QuestionsList questionsList;
     private QuestionsList questionsList1;
     private QuestionsList questionsList2;
+
     private TopicList topicList;
     private QuestionListByTopic questionListByTopic;
 
@@ -14,6 +15,12 @@ public class Player2113 {
         questionsList2 = new QuestionsList();
         questionListByTopic = new QuestionListByTopic();
         topicList = new TopicList();
+
+    private Helper helper;
+    public Player2113(String someFilePath) {
+        questionsList = new QuestionsList();
+        helper = new Helper();
+
         if (someFilePath.contentEquals("something")) {
             // TODO: load data from file
             // Add dummy data (for now)
@@ -42,7 +49,6 @@ public class Player2113 {
         ui.printTopicList(topicList, ui);
 
         while (ui.isPlaying) {
-
             ui.readCommands(ui, questionsList, topicList, questionListByTopic);
         }
 
