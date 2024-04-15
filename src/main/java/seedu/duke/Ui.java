@@ -36,6 +36,8 @@ public class Ui {
     private static final String RESUME = "resume";
     private static final String INVALID_INPUT = "Invalid input. Please type 'yes' or 'no'";
     private static final String INSTRUCTIONS = "Type 'yes' to restart session or 'no' to resume.";
+    private static final String TERMINAL_SIZE_WARNING =
+            "You may adjust your terminal size to 80(w)*18(h) for optimal experience";
 
     private static final int INDEX_TOPIC_NUM = 0;
     private static final int INDEX_INDEX = 1;
@@ -69,12 +71,14 @@ public class Ui {
             Ui ui, TopicList topicList,
             QuestionListByTopic questionListByTopic, ResultsList allResults, Helper helper, AnswerTracker userAnswers,
             Storage storage, ProgressManager progressManager
-    ) {
+    ) throws CustomException {
         Parser parser = new Parser();
 
         while (isPlaying) {
             ui.askForInput();
+
             String command = in.nextLine();
+
             try {
                 parser.parseCommand(command, ui, topicList, questionListByTopic, allResults, helper,
                         userAnswers, storage, progressManager);
@@ -97,11 +101,11 @@ public class Ui {
     }
 
     //@@author hongyijie06
-    public void printInvalidForResume(){
+    public void printInvalidForResume() {
         System.out.println(INVALID_INPUT);
     }
 
-    public void printInstructions(){
+    public void printInstructions() {
         System.out.println(INSTRUCTIONS);
     }
 
@@ -167,7 +171,7 @@ public class Ui {
                 answer = in.nextLine();
                 isPaused = parser.checkPause(answer, allResults, topicList, userAnswers, ui, storage, isPaused,
                         isTimedMode, allAnswers, answersCorrectness, topicResults, topicNum, indexGlobal);
-                if (!isPaused && !answer.equalsIgnoreCase(RESUME) && !isTimesUp) {
+                if (!isPaused && !isTimesUp && !(wasPaused && answer.equalsIgnoreCase(RESUME))) {
                     isCorrectFormat = parser.checkFormat(answer, ui);
                 }
             } while ((isPaused || wasPaused || !isCorrectFormat) && !isTimesUp);
@@ -192,11 +196,11 @@ public class Ui {
     /**
      * handles timer in the timed mode
      *
-     * @param hasCompletedSet whether all the questions in the question set of the chosen topic has been answered
-     * @param allAnswers the ArrayList of the user's answers for the question set
-     * @param numOfQns total number of questions in the question set
+     * @param hasCompletedSet    whether all the questions in the question set of the chosen topic has been answered
+     * @param allAnswers         the ArrayList of the user's answers for the question set
+     * @param numOfQns           total number of questions in the question set
      * @param answersCorrectness the Arraylist of whether the user's answers are correct for each question
-     * @param timeLimit the time limit the user set in the timed mode in seconds
+     * @param timeLimit          the time limit the user set in the timed mode in seconds
      */
     public void timerBegin(boolean hasCompletedSet, ArrayList<String> allAnswers, int numOfQns,
                            ArrayList<Boolean> answersCorrectness, int timeLimit) {
@@ -224,8 +228,8 @@ public class Ui {
     /**
      * handles the ui when time limit is reached in timed mode
      *
-     * @param allAnswers the ArrayList of the user's answers
-     * @param numOfQns number of questions in the question set of the chosen topic
+     * @param allAnswers         the ArrayList of the user's answers
+     * @param numOfQns           number of questions in the question set of the chosen topic
      * @param answersCorrectness the ArrayList of whether the user's answers are correct for each question
      */
     public void timeOut(ArrayList<String> allAnswers, int numOfQns, ArrayList<Boolean> answersCorrectness) {
@@ -246,7 +250,7 @@ public class Ui {
     /**
      * handles successful completion of the question set before the set time limit
      *
-     * @param numOfQns the total number of questions in the question set
+     * @param numOfQns    the total number of questions in the question set
      * @param isTimedMode a boolean whether the game is in timed mode
      */
     public void finishBeforeTimerChecker(int numOfQns, boolean isTimedMode) {
@@ -276,19 +280,21 @@ public class Ui {
     }
 
     //@@author cyhjason29
+
     /**
      * Resumes the game from the question of which the user last left off when exiting a paused game.
      *
-     * @param pausedQuestion An array of integers containing the previously paused topic number and question number.
-     * @param topicList List of all topics.
+     * @param pausedQuestion      An array of integers containing the previously paused topic number and question
+     *                            number.
+     * @param topicList           List of all topics.
      * @param questionListByTopic List of all questions by topic.
-     * @param allResults List of all results.
-     * @param userAnswers List of all user answers to questions.
-     * @param storage Storage that deals with game data.
-     * @param ui User interface.
-     * @param answers User answers within the current attempt.
-     * @param correctness User answer correctness within the current attempt.
-     * @param topicResults User results within the current attempt.
+     * @param allResults          List of all results.
+     * @param userAnswers         List of all user answers to questions.
+     * @param storage             Storage that deals with game data.
+     * @param ui                  User interface.
+     * @param answers             User answers within the current attempt.
+     * @param correctness         User answer correctness within the current attempt.
+     * @param topicResults        User results within the current attempt.
      * @throws CustomException If there was an error pausing the game.
      */
     public void resumeTopic(int[] pausedQuestion, TopicList topicList, QuestionListByTopic questionListByTopic,
@@ -383,12 +389,12 @@ public class Ui {
     /**
      * Prints one result to the user.
      *
-     * @param includesDetails Whether the user has asked for details.
-     * @param topicNum The number of the topic for the result.
-     * @param score The score for the result.
+     * @param includesDetails     Whether the user has asked for details.
+     * @param topicNum            The number of the topic for the result.
+     * @param score               The score for the result.
      * @param questionListByTopic List of questions by topic.
-     * @param userAnswers List of all user answers to questions.
-     * @param index Attempt number requested by user.
+     * @param userAnswers         List of all user answers to questions.
+     * @param index               Attempt number requested by user.
      */
     public void printOneResult(boolean includesDetails, int topicNum, String score,
                                QuestionListByTopic questionListByTopic, AnswerTracker userAnswers, int index) {
@@ -404,10 +410,10 @@ public class Ui {
     /**
      * Prints all results to the user.
      *
-     * @param includesDetails Whether the user has asked for details.
-     * @param allResults List of all results.
+     * @param includesDetails     Whether the user has asked for details.
+     * @param allResults          List of all results.
      * @param questionListByTopic List of questions by topic.
-     * @param userAnswers List of all user answers to questions.
+     * @param userAnswers         List of all user answers to questions.
      */
     public void printAllResults(boolean includesDetails, ResultsList allResults,
                                 QuestionListByTopic questionListByTopic, AnswerTracker userAnswers) {
@@ -430,9 +436,9 @@ public class Ui {
      * Prints the questions and the user answers to them within a topic.
      *
      * @param questionListByTopic List of questions by topic/.
-     * @param topicNum Topic number
-     * @param index Attempt number
-     * @param userAnswers List of all user answers to questions.
+     * @param topicNum            Topic number
+     * @param index               Attempt number
+     * @param userAnswers         List of all user answers to questions.
      */
     private void printResultDetails(QuestionListByTopic questionListByTopic, int topicNum, int index,
                                     AnswerTracker userAnswers) {
@@ -560,10 +566,12 @@ public class Ui {
         System.out.println("Results from the incomplete attempt will be discarded :0");
     }
 
+    //@@author yuhengr
     public void printCustomModeMessage(int topicNum, int numOfQuestions) {
         System.out.println("You've selected to practise " + numOfQuestions + " from topic " + topicNum);
     }
 
+    //@@author yuhengr
     public int getCustomTopicNum() {
         System.out.println("Which topic do you want to practise?");
         String userInput = in.nextLine();
@@ -577,6 +585,7 @@ public class Ui {
         }
     }
 
+    //@@author yuhengr
     public int getCustomNumOfQuestions() {
         System.out.println("How many questions would you like to practise?");
         String userInput = in.nextLine();
@@ -589,15 +598,18 @@ public class Ui {
         }
     }
 
+    //@@author yuhengr
     public String getUserAnswerInput() {
         String userInput = in.nextLine();
         return userInput;
     }
 
+    //@@author yuhengr
     public void displayUserAnswer(String userAnswer) {
         System.out.println("Your answer: " + userAnswer);
     }
 
+    //@@author yuhengr
     public int getCheckpointGoal() {
         System.out.println("How many custom questions would you like to complete?");
         String userInput = in.nextLine();
@@ -609,34 +621,38 @@ public class Ui {
         }
     }
 
+    //@@author yuhengr
     public void displayProgressClearedMessage() {
         System.out.println("Your progress has been cleared.");
     }
 
+    //@@author yuhengr
     public boolean getConfirmationClearProgress() {
         System.out.println("Are you sure you want to clear game progress? (y or n)");
 
         String userInput = in.nextLine();
 
-        while(!isValidConfirmationInput(userInput)) {
+        while (!isValidConfirmationInput(userInput)) {
             System.out.println("Please enter y or n.");
 
             userInput = in.nextLine();
         }
 
-        if(userInput.contentEquals("y")){
+        if (userInput.contentEquals("y")) {
             return true;
         }
         return false;
     }
 
+    //@@author yuhengr
     private boolean isValidConfirmationInput(String userInput) {
-        if(userInput.contentEquals("y") || userInput.contentEquals("n")) {
+        if (userInput.contentEquals("y") || userInput.contentEquals("n")) {
             return true;
         }
         return false;
     }
 
+    //@@author yuhengr
     public void printCustomQuestionSet(
             int numOfCustomQns, ProgressManager progressManager, QuestionsList customQuestionsList,
             boolean isInCheckpointMode, Ui ui, Results results) {
@@ -646,7 +662,7 @@ public class Ui {
         String[] inputAnswers = new String[numOfCustomQns];
         ArrayList<Boolean> answersCorrectness = new ArrayList<>();
 
-        for(int i = 0; i < numOfCustomQns; i++) {
+        for (int i = 0; i < numOfCustomQns; i++) {
             Question questionUnit = customQuestionsList.getQuestionUnit(i);
             results.increaseNumberOfQuestions();
             Parser parser = new Parser();
@@ -660,25 +676,32 @@ public class Ui {
                 displayUserAnswer(userAnswerInput);
 
                 isCorrectAnswerFormat = parser.checkFormat(userAnswerInput, ui);
-            } while(!isCorrectAnswerFormat);
+            } while (!isCorrectAnswerFormat);
 
             parser.handleAnswerInputs(inputAnswers, i, userAnswerInput,
                     questionUnit, results, answersCorrectness);
 
-            if(isInCheckpointMode) {
+            if (isInCheckpointMode) {
                 progressManager.incrementNumOfAttemptedCustomQuestions();
             }
         }
     }
 
+    //@@author yuhengr
     public void displayCheckpointGoal(int checkpointGoal) {
         System.out.println("You've chosen a goal of " + checkpointGoal + " questions.");
     }
 
+    //@@author yuhengr
     public void displayAlreadyInCheckpointMode(int checkpointGoal, int numOfQnsToHitGoal) {
         System.out.println("You've already set a checkpoint.");
         System.out.println("Your goal is to attempt " + checkpointGoal + " questions.");
         System.out.println("You have " + numOfQnsToHitGoal + " more questions to go.");
+    }
+
+    //@@author songyuew
+    public void displayScreenSizeWarning() {
+        System.out.println(TERMINAL_SIZE_WARNING);
     }
 }
 
