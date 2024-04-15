@@ -101,11 +101,11 @@ public class Ui {
     }
 
     //@@author hongyijie06
-    public void printInvalidForResume(){
+    public void printInvalidForResume() {
         System.out.println(INVALID_INPUT);
     }
 
-    public void printInstructions(){
+    public void printInstructions() {
         System.out.println(INSTRUCTIONS);
     }
 
@@ -196,11 +196,11 @@ public class Ui {
     /**
      * handles timer in the timed mode
      *
-     * @param hasCompletedSet whether all the questions in the question set of the chosen topic has been answered
-     * @param allAnswers the ArrayList of the user's answers for the question set
-     * @param numOfQns total number of questions in the question set
+     * @param hasCompletedSet    whether all the questions in the question set of the chosen topic has been answered
+     * @param allAnswers         the ArrayList of the user's answers for the question set
+     * @param numOfQns           total number of questions in the question set
      * @param answersCorrectness the Arraylist of whether the user's answers are correct for each question
-     * @param timeLimit the time limit the user set in the timed mode in seconds
+     * @param timeLimit          the time limit the user set in the timed mode in seconds
      */
     public void timerBegin(boolean hasCompletedSet, ArrayList<String> allAnswers, int numOfQns,
                            ArrayList<Boolean> answersCorrectness, int timeLimit) {
@@ -228,8 +228,8 @@ public class Ui {
     /**
      * handles the ui when time limit is reached in timed mode
      *
-     * @param allAnswers the ArrayList of the user's answers
-     * @param numOfQns number of questions in the question set of the chosen topic
+     * @param allAnswers         the ArrayList of the user's answers
+     * @param numOfQns           number of questions in the question set of the chosen topic
      * @param answersCorrectness the ArrayList of whether the user's answers are correct for each question
      */
     public void timeOut(ArrayList<String> allAnswers, int numOfQns, ArrayList<Boolean> answersCorrectness) {
@@ -250,7 +250,7 @@ public class Ui {
     /**
      * handles successful completion of the question set before the set time limit
      *
-     * @param numOfQns the total number of questions in the question set
+     * @param numOfQns    the total number of questions in the question set
      * @param isTimedMode a boolean whether the game is in timed mode
      */
     public void finishBeforeTimerChecker(int numOfQns, boolean isTimedMode) {
@@ -280,19 +280,21 @@ public class Ui {
     }
 
     //@@author cyhjason29
+
     /**
      * Resumes the game from the question of which the user last left off when exiting a paused game.
      *
-     * @param pausedQuestion An array of integers containing the previously paused topic number and question number.
-     * @param topicList List of all topics.
+     * @param pausedQuestion      An array of integers containing the previously paused topic number and question
+     *                            number.
+     * @param topicList           List of all topics.
      * @param questionListByTopic List of all questions by topic.
-     * @param allResults List of all results.
-     * @param userAnswers List of all user answers to questions.
-     * @param storage Storage that deals with game data.
-     * @param ui User interface.
-     * @param answers User answers within the current attempt.
-     * @param correctness User answer correctness within the current attempt.
-     * @param topicResults User results within the current attempt.
+     * @param allResults          List of all results.
+     * @param userAnswers         List of all user answers to questions.
+     * @param storage             Storage that deals with game data.
+     * @param ui                  User interface.
+     * @param answers             User answers within the current attempt.
+     * @param correctness         User answer correctness within the current attempt.
+     * @param topicResults        User results within the current attempt.
      * @throws CustomException If there was an error pausing the game.
      */
     public void resumeTopic(int[] pausedQuestion, TopicList topicList, QuestionListByTopic questionListByTopic,
@@ -387,12 +389,12 @@ public class Ui {
     /**
      * Prints one result to the user.
      *
-     * @param includesDetails Whether the user has asked for details.
-     * @param topicNum The number of the topic for the result.
-     * @param score The score for the result.
+     * @param includesDetails     Whether the user has asked for details.
+     * @param topicNum            The number of the topic for the result.
+     * @param score               The score for the result.
      * @param questionListByTopic List of questions by topic.
-     * @param userAnswers List of all user answers to questions.
-     * @param index Attempt number requested by user.
+     * @param userAnswers         List of all user answers to questions.
+     * @param index               Attempt number requested by user.
      */
     public void printOneResult(boolean includesDetails, int topicNum, String score,
                                QuestionListByTopic questionListByTopic, AnswerTracker userAnswers, int index) {
@@ -408,10 +410,10 @@ public class Ui {
     /**
      * Prints all results to the user.
      *
-     * @param includesDetails Whether the user has asked for details.
-     * @param allResults List of all results.
+     * @param includesDetails     Whether the user has asked for details.
+     * @param allResults          List of all results.
      * @param questionListByTopic List of questions by topic.
-     * @param userAnswers List of all user answers to questions.
+     * @param userAnswers         List of all user answers to questions.
      */
     public void printAllResults(boolean includesDetails, ResultsList allResults,
                                 QuestionListByTopic questionListByTopic, AnswerTracker userAnswers) {
@@ -434,9 +436,9 @@ public class Ui {
      * Prints the questions and the user answers to them within a topic.
      *
      * @param questionListByTopic List of questions by topic/.
-     * @param topicNum Topic number
-     * @param index Attempt number
-     * @param userAnswers List of all user answers to questions.
+     * @param topicNum            Topic number
+     * @param index               Attempt number
+     * @param userAnswers         List of all user answers to questions.
      */
     private void printResultDetails(QuestionListByTopic questionListByTopic, int topicNum, int index,
                                     AnswerTracker userAnswers) {
@@ -630,13 +632,13 @@ public class Ui {
 
         String userInput = in.nextLine();
 
-        while(!isValidConfirmationInput(userInput)) {
+        while (!isValidConfirmationInput(userInput)) {
             System.out.println("Please enter y or n.");
 
             userInput = in.nextLine();
         }
 
-        if(userInput.contentEquals("y")){
+        if (userInput.contentEquals("y")) {
             return true;
         }
         return false;
@@ -644,7 +646,7 @@ public class Ui {
 
     //@@author yuhengr
     private boolean isValidConfirmationInput(String userInput) {
-        if(userInput.contentEquals("y") || userInput.contentEquals("n")) {
+        if (userInput.contentEquals("y") || userInput.contentEquals("n")) {
             return true;
         }
         return false;
@@ -660,7 +662,7 @@ public class Ui {
         String[] inputAnswers = new String[numOfCustomQns];
         ArrayList<Boolean> answersCorrectness = new ArrayList<>();
 
-        for(int i = 0; i < numOfCustomQns; i++) {
+        for (int i = 0; i < numOfCustomQns; i++) {
             Question questionUnit = customQuestionsList.getQuestionUnit(i);
             results.increaseNumberOfQuestions();
             Parser parser = new Parser();
@@ -674,12 +676,12 @@ public class Ui {
                 displayUserAnswer(userAnswerInput);
 
                 isCorrectAnswerFormat = parser.checkFormat(userAnswerInput, ui);
-            } while(!isCorrectAnswerFormat);
+            } while (!isCorrectAnswerFormat);
 
             parser.handleAnswerInputs(inputAnswers, i, userAnswerInput,
                     questionUnit, results, answersCorrectness);
 
-            if(isInCheckpointMode) {
+            if (isInCheckpointMode) {
                 progressManager.incrementNumOfAttemptedCustomQuestions();
             }
         }
