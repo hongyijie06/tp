@@ -49,7 +49,7 @@ What is your name?
 
 ## Usage
 
-> **[!IMPORTANT]**
+> **[IMPORTANT]**
 >
 > The current release of Player2113 is a MVP preview version with various proposed functions unimplemented. Please
 > strictly follow this user's guide.
