@@ -67,6 +67,10 @@ public class Ui {
     }
 
     //@@author ngxzs
+
+    /**
+     * Reads commands while isPlaying
+     */
     public void readCommands(
             Ui ui, TopicList topicList,
             QuestionListByTopic questionListByTopic, ResultsList allResults, Helper helper, AnswerTracker userAnswers,
@@ -91,6 +95,10 @@ public class Ui {
     }
 
     //@@author ngxzs
+
+    /**
+     * Displays a prompt on UI asking User for input
+     */
     private void askForInput() {
         System.out.println(MESSAGE_INPUT);
     }
@@ -454,10 +462,17 @@ public class Ui {
     }
 
     //@@author ngxzs
+
+    /**
+     * Handles Exception by printing error message
+     */
     public void handleException(CustomException e) {
         System.out.println(e.getMessage());
     }
 
+    /**
+     * Prints a new line on CLI for UI clarity
+     */
     public void printLine() {
         for (int i = 0; i < NEW_LINE_LENGTH; i += 1) {
             System.out.print("*");
@@ -465,6 +480,9 @@ public class Ui {
         System.out.println();
     }
 
+    /**
+     * Prints Hello message
+     */
     public void sayHi() {
         String logo =
                 "______ _                       _____  __   __   _____\n" +
@@ -498,7 +516,12 @@ public class Ui {
         printLine();
     }
 
-    // checks userName, returns true if is an Integer, else false
+    /**
+     * Checks if userName is an Integer
+     *
+     * @param userName input by user
+     * @return true if isInteger, else false
+     */
     private static boolean isInteger(String userName) {
         try {
             Integer.parseInt(userName);
@@ -508,6 +531,9 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints bye message
+     */
     public void sayBye() {
         System.out.println(MESSAGE_SAY_BYE);
         printLine();
