@@ -22,9 +22,11 @@ public class Question {
         this.explanation = explanation;
     }
 
+    // gets explanation to a Question
     public String getExplanation() {
         return explanation;
     }
+
     //@@author cyhjason29
     public String getQuestion() {
         String optionA = options[FIRST_OPTION];
@@ -35,6 +37,7 @@ public class Question {
                 System.lineSeparator() + OPTION_C + optionC + System.lineSeparator() + OPTION_D + optionD;
     }
     //@@author ngxzs
+    // gets solution to a Question
     public String getSolution() {
         return solution;
     }

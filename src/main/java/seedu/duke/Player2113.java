@@ -47,11 +47,13 @@ public class Player2113 {
         ui = new Ui();
         progressManager = new ProgressManager(allResults);
 
+        // create arrayList for questionsList
         ArrayList<QuestionsList> arrayOfQuestionsLists = new ArrayList<>();
         arrayOfQuestionsLists.add(questionsList1);
         arrayOfQuestionsLists.add(questionsList2);
         arrayOfQuestionsLists.add(questionsList3);
 
+        // populate questions in questionsList
         try {
             for (int questionList = 0; questionList < arrayOfQuestionsLists.size(); questionList++) {
                 QuestionsList currentQuestionList = arrayOfQuestionsLists.get(questionList);
@@ -62,6 +64,7 @@ public class Player2113 {
             ui.handleException(e);
         }
 
+        // create Topics
         Topic topic1 = new Topic(questionsList1, "Software Engineering Concepts I", false, "SE & OOP concepts");
         Topic topic2 = new Topic(questionsList2, "Software Engineering Concepts II", false, "SE & OOP concepts II");
         Topic topic3 = new Topic(questionsList3, "All About Java", false, "General info on Java");
