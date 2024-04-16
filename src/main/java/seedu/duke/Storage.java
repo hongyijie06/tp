@@ -48,6 +48,7 @@ public class Storage {
     private static final String FOLDER_NAME = "data";
     private static final String MESSAGE_ERROR_INIT = "There was an error initiating the save file.";
     private static final String MESSAGE_ERROR_WRITING = "There was an error writing to the save file.";
+    private static final String MESSAGE_ERROR_CREATE_QUESTION_LIST = "unable to create questionList";
     private static final String TEMP_RESULT = "temp_result ";
     private static final String TEMP_ANSWER = "temp_answer ";
     private static final String TEMP_CORRECTNESS = "temp_correctness ";
@@ -391,7 +392,13 @@ public class Storage {
     }
 
     //@@author ngxzs
-    // creates question list1,2,3
+    /**
+     * Creates questions for Topic 1,2,3
+     *
+     * @param questionListIndex the index number of the questionList ie Topic index
+     * @param questionList      the questionList to add Questions to
+     * @throws CustomException  prints message error
+     */
     public void updateQuestionList(int questionListIndex, QuestionsList questionList) throws CustomException {
         int questionListNum = questionListIndex + 1; // +1 coz 0 index
         switch (questionListNum) {
@@ -405,11 +412,15 @@ public class Storage {
             updateQuestionList3(questionList);
             break;
         default:
-            throw new CustomException("unable to create questionList" + questionListNum);
+            throw new CustomException(MESSAGE_ERROR_CREATE_QUESTION_LIST + questionListNum);
         }
     }
 
-    // Adds questions for questionsList1 "Software Engineering Concepts I"
+    /**
+     * Adds questions to questionsList for Topic 1: "Software Engineering Concepts I"
+     *
+     * @param questionsList for Topic 1
+     */
     private void updateQuestionList1(QuestionsList questionsList) {
         Question question1 = new Question(
                 "What language does CS2113 use?",
@@ -521,7 +532,12 @@ public class Storage {
         questionsList.addQuestion(question10);
     }
 
-    // Adds questions for questionList2 "Software Engineering Concepts II"
+
+    /**
+     * Adds questions to questionsList for Topic 2: "Software Engineering Concepts II"
+     *
+     * @param questionsList for Topic 2
+     */
     private void updateQuestionList2(QuestionsList questionsList) {
         Question question1 = new Question(
                 "One should never prioritize efficiency or performance over readability",
@@ -631,7 +647,11 @@ public class Storage {
         questionsList.addQuestion(question10);
     }
 
-    // "All about Java"
+    /**
+     * Adds questions to questionsList for Topic 3: "All about Java"
+     *
+     * @param questionsList for Topic 3
+     */
     private void updateQuestionList3(QuestionsList questionsList) {
         Question question1 = new Question(
                 "Which command checks your current java version",
