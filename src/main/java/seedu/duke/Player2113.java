@@ -79,7 +79,13 @@ public class Player2113 {
                 ui.handleException(exception);
             }
         }
-        ui.sayHi();
+
+        try {
+            ui.sayHi();
+        } catch (NoSuchElementException e) {
+            ui.sayBye();
+        }
+
 
         File saveFile = new File(FILE_PATH_STORAGE);
         boolean isPaused = false;
