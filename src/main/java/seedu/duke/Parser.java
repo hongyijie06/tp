@@ -103,7 +103,7 @@ public class Parser {
                 //processExplainCommand(lowerCaseCommand, ui, topicList, questionListByTopic);
                 handleExplainCommandRegEx(command, ui, topicList, questionListByTopic);
             } else if (commandToken == CommandList.CLEAR) {
-                handleClearCommand(ui, allResults, progressManager, command);
+                handleClearCommand(ui, allResults, progressManager, command, topicList);
             } else if (lowerCaseCommand.startsWith(RESULTS_PARAMETER)) {
                 processResultsCommand(lowerCaseCommand, allResults, ui, questionListByTopic, userAnswers);
             } else if (lowerCaseCommand.contentEquals(BYE_PARAMETER)) {
@@ -585,7 +585,7 @@ public class Parser {
      * @throws CustomException      if command does not follow format.
      */
     private void handleClearCommand(
-            Ui ui, ResultsList allResults, ProgressManager progressManager, String command)
+            Ui ui, ResultsList allResults, ProgressManager progressManager, String command, TopicList topicList)
             throws CustomException {
 
         Pattern clearPattern = Pattern.compile(CommandList.getClearPattern());
@@ -600,6 +600,9 @@ public class Parser {
 
         if(confirmClear) {
             allResults = progressManager.clearProgress();
+            for (Topic topic : topicList.getTopicList()) {
+                topic.markAsNotAttempted();
+            }
             ui.displayProgressClearedMessage();
         }
     }

@@ -79,6 +79,8 @@ public class Ui {
         Parser parser = new Parser();
 
         while (isPlaying) {
+            topicList.displayProgressBar();
+            ui.printTopicList(topicList, ui);
             ui.askForInput();
 
             String command = in.nextLine();

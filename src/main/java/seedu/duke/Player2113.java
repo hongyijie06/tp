@@ -86,7 +86,6 @@ public class Player2113 {
             ui.sayBye();
         }
 
-
         File saveFile = new File(FILE_PATH_STORAGE);
         boolean isPaused = false;
         try {
@@ -142,9 +141,6 @@ public class Player2113 {
                 ui.handleException(e);
             }
         }
-
-        topicList.displayProgressBar();
-        ui.printTopicList(topicList, ui);
 
         //@@author songyuew
         while (ui.isPlaying) {

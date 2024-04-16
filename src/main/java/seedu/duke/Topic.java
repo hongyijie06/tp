@@ -41,6 +41,13 @@ public class Topic {
         this.hasAttemptedStatus = true;
     }
 
+    /**
+     * marks topic as not attempted
+     */
+    public void markAsNotAttempted() {
+        this.hasAttemptedStatus = false;
+    }
+
     public String toString(){
         String status = this.hasAttempted() ? "Attempted" : "Not attempted";
         return "[" + status + "]" + topicName;
