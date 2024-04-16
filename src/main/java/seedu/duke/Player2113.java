@@ -142,6 +142,9 @@ public class Player2113 {
             }
         }
 
+        topicList.displayProgressBar();
+        ui.printTopicList(topicList, ui);
+
         //@@author songyuew
         while (ui.isPlaying) {
             try {
