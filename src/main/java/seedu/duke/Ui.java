@@ -34,6 +34,7 @@ public class Ui {
     private static final String MESSAGE_CHOOSE_TOPIC = "Please choose a topic to play:";
     private static final String MESSAGE_RANDOM_TOPIC = "Randomly select a topic for me ;)";
     private static final String MESSAGE_ANSWER_FORMAT = "Your answer must be either a, b, c, or d!";
+    private static final String MESSAGE_UNKNOWN_USER_NAME = "Unknown User";
     private static final String ANSWER_TIMEOUT = "You ran out of time!";
     private static final String RESUME = "resume";
     private static final String INVALID_INPUT = "Invalid input. Please type 'yes' or 'no'";
@@ -501,6 +502,7 @@ public class Ui {
 
         System.out.println("Hello from\n" + logo);
 
+        // asks for userName till a valid one is given
         String userName = "";
         while (true) {
             System.out.println(MESSAGE_ASK_FOR_NAME);
@@ -510,16 +512,21 @@ public class Ui {
             }
             System.out.println(MESSAGE_ASK_FOR_NAME_AGAIN);
         }
+        // process UserName
         String trimmedUserName = userName.trim();
         String userNameToPrint;
-        if (isInteger(userName.trim())) {
+        if (isInteger(userName.trim())) { // if userName is a number
             userNameToPrint = MESSAGE_NUMBER_USER_NAME + trimmedUserName;
+        } else if (trimmedUserName.contentEquals("")) { // handle ^D
+            userNameToPrint = MESSAGE_UNKNOWN_USER_NAME;
         } else {
             userNameToPrint = trimmedUserName;
         }
+
         System.out.println("Hello " + userNameToPrint);
         printLine();
     }
+
 
     /**
      * Checks if userName is an Integer
