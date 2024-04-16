@@ -274,6 +274,11 @@ public class Parser {
             throw new CustomException(MESSAGE_INVALID_COMMAND_FORMAT);
         }
 
+        String commandParameter = commandParts[THIRD_PARAMETER_INDEX];
+        boolean isCommandParameterOverflowing = isParamOverflowing(commandParameter);
+        if(isCommandParameterOverflowing) {
+            throw new CustomException(MESSAGE_EXCEPTION_CAUGHT + MESSAGE_PARAM_TOO_LONG);
+        }
         try {
             if (commandParts.length == TIMER_ONE_PARAMETER_LENGTH) {
                 int timeLimit = Integer.parseInt(commandParts[THIRD_PARAMETER_INDEX]);
@@ -293,6 +298,7 @@ public class Parser {
         } catch (NumberFormatException e) {
             throw new CustomException(MESSAGE_INVALID_PARAMETERS);
         }
+
     }
 
     //@@author hongyijie06
@@ -894,7 +900,7 @@ public class Parser {
     }
 
     //@@author yuhengr
-    private boolean isParamOverflowing(String param) {
+    private static boolean isParamOverflowing(String param) {
         final int maxParamLength = 5;
         int paramLength = param.length();
 
