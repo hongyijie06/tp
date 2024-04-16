@@ -1,3 +1,4 @@
+//@@author ngxzs
 package seedu.duke;
 
 import org.junit.jupiter.api.Test;
@@ -15,10 +16,12 @@ class QuestionsListTest {
     Question question1;
     Question question2;
 
+    // creates a QuestionList for testing
     void createQuestionList() {
         questionsList = new QuestionsList();
     }
 
+    // creates 2 Questions for testing
     void createTwoQuestions() {
         question1 = new Question("question1", "solution1", "explanation1",
                 new String[]{"optionA","optionB","optionC","optionD"});

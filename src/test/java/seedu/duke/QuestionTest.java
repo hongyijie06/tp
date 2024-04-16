@@ -18,9 +18,11 @@ class QuestionTest {
     final String[] options1 = new String[]{"optionA","optionB","optionC","optionD"};
 
     //@@author ngxzs
+    // creates 1 Question for testing
     void createQuestion() {
         oneQuestion = new Question(question1, solution1, explanation1,options1);
     }
+
     @Test
     void getExplanation_oneQuestion_expectExplanation() {
         createQuestion();

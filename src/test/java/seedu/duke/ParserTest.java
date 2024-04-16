@@ -29,6 +29,7 @@ class ParserTest {
     private Results roundTwoResults;
     private Storage storage;
 
+    // setup objects like QuestionsList, TopicsList, ResultsList, Ui, Helper etc before testing
     void setUp() {
         createFourQuestions();
         createTwoQuestionLists();

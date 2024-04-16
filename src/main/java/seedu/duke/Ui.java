@@ -31,8 +31,10 @@ public class Ui {
     private static final String MESSAGE_ASK_FOR_NAME = "What is your name?";
     private static final String MESSAGE_ASK_FOR_NAME_AGAIN = "Good try, but I still don't know who I'm talking to";
     private static final String MESSAGE_SAY_BYE = "bye bye, get more sleep zzz";
-    private static final String ANSWER_TIMEOUT = "You ran out of time!";
+    private static final String MESSAGE_CHOOSE_TOPIC = "Please choose a topic to play:";
+    private static final String MESSAGE_RANDOM_TOPIC = "Randomly select a topic for me ;)";
     private static final String MESSAGE_ANSWER_FORMAT = "Your answer must be either a, b, c, or d!";
+    private static final String ANSWER_TIMEOUT = "You ran out of time!";
     private static final String RESUME = "resume";
     private static final String INVALID_INPUT = "Invalid input. Please type 'yes' or 'no'";
     private static final String INSTRUCTIONS = "Type 'yes' to restart session or 'no' to resume.";
@@ -67,6 +69,9 @@ public class Ui {
     }
 
     //@@author ngxzs
+    /**
+     * Reads user commands during gameplay
+     */
     public void readCommands(
             Ui ui, TopicList topicList,
             QuestionListByTopic questionListByTopic, ResultsList allResults, Helper helper, AnswerTracker userAnswers,
@@ -91,6 +96,10 @@ public class Ui {
     }
 
     //@@author ngxzs
+
+    /**
+     * Console print message asking for user input
+     */
     private void askForInput() {
         System.out.println(MESSAGE_INPUT);
     }
@@ -120,9 +129,9 @@ public class Ui {
             }
             System.out.println();
         }
-        System.out.println((topicListSize + 1) + ". " + "Randomly select a topic for me ;)");
+        System.out.println((topicListSize + 1) + ". " + MESSAGE_RANDOM_TOPIC);
         printLine();
-        System.out.println("Please choose a topic to play:");//input command in the form "start [INDEX]
+        System.out.println(MESSAGE_CHOOSE_TOPIC);
         printLine();
     }
 
@@ -364,21 +373,34 @@ public class Ui {
     }
 
     //@@author ngxzs
+
+    /**
+     * Prints the solution to questionNum
+     */
     public void printOneSolution(int questionNum, String solution) {
         System.out.println(MESSAGE_ONE_SOLUTION + questionNum + ":"
                 + System.lineSeparator() + solution);
     }
 
+    /**
+     * Prints the explanation to questionNum
+     */
     public void printOneExplanation(int questionNum, String explanation) {
         System.out.println(MESSAGE_ONE_EXPLANATION + questionNum + ":"
                 + System.lineSeparator() + explanation);
     }
 
+    /**
+     * Prints allSolutions
+     */
     public void printAllSolutions(String allSolutions) {
         System.out.print(MESSAGE_ALL_SOLUTIONS
                 + System.lineSeparator() + allSolutions);
     }
 
+    /**
+     * Prints allExplanations
+     */
     public void printAllExplanations(String allExplanations) {
         System.out.print(MESSAGE_ALL_EXPLANATIONS
                 + System.lineSeparator() + allExplanations);
@@ -454,10 +476,16 @@ public class Ui {
     }
 
     //@@author ngxzs
+    /**
+     * Handles Exception by printing appropriate error message
+     */
     public void handleException(CustomException e) {
         System.out.println(e.getMessage());
     }
 
+    /**
+     * Console prints a new line for UI clarity
+     */
     public void printLine() {
         for (int i = 0; i < NEW_LINE_LENGTH; i += 1) {
             System.out.print("*");
@@ -465,6 +493,9 @@ public class Ui {
         System.out.println();
     }
 
+    /**
+     * Prints Hello message
+     */
     public void sayHi() {
         String logo =
                 "______ _                       _____  __   __   _____\n" +
@@ -498,7 +529,12 @@ public class Ui {
         printLine();
     }
 
-    // checks userName, returns true if is an Integer, else false
+    /**
+     * Checks if userName is an Integer
+     *
+     * @param userName input by user
+     * @return true if isInteger, else false
+     */
     private static boolean isInteger(String userName) {
         try {
             Integer.parseInt(userName);
@@ -508,6 +544,9 @@ public class Ui {
         }
     }
 
+    /**
+     * Prints bye message
+     */
     public void sayBye() {
         System.out.println(MESSAGE_SAY_BYE);
         printLine();
