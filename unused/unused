@@ -1,10 +1,19 @@
 public class Unused {
     // for the wonderful but forgetten code
 
-    //@@author ngxzs--unused
+    //@@author ngxzs
     // WHAT: replaced by handleSolutionCommandRegEx() in Parser.java
     // after adding in regEx feature
     // WHY: shows refactoring of code after code review
+    /**
+     * Process Solution command and prints out the appropriate number of solutions
+     *
+     * @param lowerCaseCommand      userInput
+     * @param ui                    Ui object for Ui methods
+     * @param topicList             TopicList object for TopicList methods
+     * @param questionListByTopic   QuestionListByTopic object for QuestionListByTopic methods
+     * @throws CustomException      prints error message for invalid parameters
+     */
     private void processSolutionCommand(
             String lowerCaseCommand, Ui ui, TopicList topicList, QuestionListByTopic questionListByTopic)
             throws CustomException {
@@ -36,10 +45,21 @@ public class Unused {
             ui.printAllSolutions(allSolutions);
         }
     }
+
     //@@author ngxzs
     // WHAT: replaced by handleExplainCommandRegEx() in Parser.java
     // after adding in regEx feature
     // WHY: shows refactoring of code after code review
+    //@@author ngxzs
+    /**
+     * Process Explain command and prints out the appropriate number of explanations
+     *
+     * @param lowerCaseCommand  userInput
+     * @param ui                Ui object for Ui methods
+     * @param topicList         TopicList object for TopicList methods
+     * @param questionListByTopic   QuestionListByTopic object for QuestionListByTopic methods
+     * @throws CustomException  prints error message for invalid parameters
+     */
     private void processExplainCommand(
             String lowerCaseCommand, Ui ui, TopicList topicList, QuestionListByTopic questionListByTopic)
             throws CustomException {
@@ -69,6 +89,97 @@ public class Unused {
             // get all explanations
             String allExplanations = qnList.getAllExplanations();
             ui.printAllExplanations(allExplanations);
+        }
+    }
+    //@@author ngxzs
+    // WHY checkIfTwoParameters() is used in processSolutionCommand() and processExplainCommand()
+    /**
+     * Checks if command type isValid and if parameters are valid
+     *
+     * @param expectedCommandType solution or explain
+     * @param commandParts        userInput in a String[]
+     * @return True if 2 parameters, else false (ie 1 param only)
+     * @throws CustomException message to handle invalid command/ parameters
+     */
+    private static boolean checkIfTwoParameters(
+            String expectedCommandType, String[] commandParts) throws CustomException {
+        int commandPartsLength = commandParts.length;
+        String actualCommandType = commandParts[0];
+
+        // checks validity of command
+        if (!actualCommandType.contentEquals(expectedCommandType)) {
+            throw new CustomException("Do you mean " + expectedCommandType + " instead?");
+        }
+
+        // checks correct number of parameters (1 or 2 only)
+        if (commandPartsLength == NO_PARAMETER_LENGTH || commandPartsLength > TWO_PARAMETER_LENGTH) {
+            throw new CustomException(MESSAGE_INVALID_PARAMETERS);
+        }
+
+        return (commandPartsLength == TWO_PARAMETER_LENGTH);
+    }
+
+
+    // convert String commandParameter to int topicNum/ questionNum and check validity
+    // WHY getTopicOrQuestionNum() is used in processSolutionCommand() and processExplainCommand()
+    private int getTopicOrQuestionNum(String commandParameter, int maxSize) throws CustomException {
+        int parameterNum;
+        // check if topic/ questionNum is a number
+        try {
+            parameterNum = Integer.parseInt(commandParameter);
+        } catch (NumberFormatException e) {
+            throw new CustomException(MESSAGE_INVALID_PARAMETERS);
+        }
+        // checks validity
+        if (parameterNum < 1 || parameterNum > maxSize) {
+            throw new CustomException(MESSAGE_INDEX_OUT_OF_BOUNDS);
+        }
+        return parameterNum;
+    }
+
+    //@@author yuhengr
+    //WHAT: alternative to processStartCommand() in Parser class
+    private void beginStartCommand(
+            String command, Ui ui, TopicList topicList, QuestionListByTopic questionListByTopic,
+            ResultsList allResults, AnswerTracker userAnswers, Storage storage
+    ) throws CustomException {
+
+        Pattern topicPattern = Pattern.compile(CommandList.getTopicPattern());
+        Matcher matcher = topicPattern.matcher(command);
+        boolean foundMatch = matcher.find();
+
+        if (!foundMatch) {
+            throw new CustomException("Can't find a match.");
+        }
+
+        try {
+            int topicNum = Integer.parseInt(matcher.group(1));
+            System.out.println("You've chosen topic number " + topicNum);
+            final int upperLimit = topicList.getSize() + 1;
+            boolean validTopicNum = (topicNum < upperLimit) && topicNum != 0;
+            boolean isRandomTopicNum = topicNum == upperLimit;
+
+            if (validTopicNum) {
+                ui.printChosenTopic(topicNum, topicList, questionListByTopic, allResults, userAnswers, isTimedMode,
+                        storage, ui, timeLimit);
+
+                topicList.get(topicNum - 1).markAsAttempted();
+                topicList.displayProgressBar();
+                ui.printFinishedTopic();
+                ui.printTopicList(topicList, ui);
+
+            } else if (isRandomTopicNum) {
+                Helper helper = new Helper();
+                topicNum = helper.generateRandomNumber(upperLimit);
+            } else {
+                throw new CustomException(MESSAGE_INVALID_TOPIC_NUM);
+            }
+        } catch (NumberFormatException error) {
+            throw new CustomException(TOPIC_PARAMETER + " " + MESSAGE_INVALID_COMMAND_FORMAT);
+        } catch (IllegalStateException error) {
+            throw new CustomException(MESSAGE_INVALID_TOPIC_NUM);
+        } catch (CustomException e) {
+            throw e;
         }
     }
 }
