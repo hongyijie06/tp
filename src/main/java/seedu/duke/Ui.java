@@ -48,14 +48,7 @@ public class Ui {
     private static final boolean IS_TIMED_MODE = true;
     public boolean isPlaying = true;
 
-    public boolean hasStartedGame = false;
-    public TopicList topicList;
-    public QuestionListByTopic questionListByTopic;
-
-    public String[] inputAnswers;
-
     private boolean isTimesUp;
-    private boolean isActivated;
     private boolean hasCompletedSet;
 
     private int indexGlobal;
@@ -96,7 +89,6 @@ public class Ui {
     }
 
     //@@author ngxzs
-
     /**
      * Console print message asking for user input
      */
